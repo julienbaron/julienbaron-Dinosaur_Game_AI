@@ -2,8 +2,6 @@ import pygame as pg
 import os 
 import random 
 
-from Dinosaur_Game_AI.Components.Dinosaur import Dinosaur
-
 class Bird(object):
     """description of class"""
     BIRD_IMG = [pg.image.load(os.path.join("Sprites","Base_1.PNG")), pg.image.load(os.path.join("Sprites","Base_1.PNG"))]
@@ -30,9 +28,18 @@ class Bird(object):
 
         win.blit(self.img, (self.x, self.y))
 
-    def collide_bird(self):
-        dinosaur_mask = Dinosaur.get_mask()
+    def collide_bird(self, dinausor):
+        dinosaur_mask = dinosaur.get_mask()
         bird_mask = pg.mask.from_surface(self.img)
+
+        calculate_coordonate = (self.x - dinosaur.x, self.y - round(dinosaur.y))
+
+        collide_point = dinosaur_mask.overlap(bird_mask, calculate_coordonate)
+
+        if collide_bird:
+            return True 
+
+        return False 
 
 
     
