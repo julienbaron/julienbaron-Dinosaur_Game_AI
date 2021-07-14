@@ -28,7 +28,7 @@ class Controller(object):
         birds= [Bird(10, 1)]
         rem = []
         win = pg.display.set_mode((config.WIN_WIDTH, config.WIN_HEIGHT))
-        clock = pg.time.Clock(30)
+        clock = pg.time.Clock()
         run = True 
         while run :
             for event in pg.event.get():
@@ -36,15 +36,14 @@ class Controller(object):
                     run = False 
                     pg.quit()
                     break
-        for bird in birds:
-            if bird.collide_bird(dino):
-                pass 
-            if bird.x + bird.img.get_width() < 0:
-                rem.append(bird)
 
-
+            for bird in birds:
+                if bird.collide_bird(dino):
+                    pass 
+                if bird.x + bird.img.get_width() < 0:
+                    rem.append(bird)
             bird.move()
-        base.move()
-        View.DrawWindow()
+            base.move()
+            View.DrawWindow(birds, dino, base, win)
 
 

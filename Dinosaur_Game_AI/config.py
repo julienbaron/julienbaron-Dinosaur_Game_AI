@@ -1,8 +1,8 @@
 #
 #
 #
-WIN_WIDTH = 500
-WIN_HEIGHT = 800
+WIN_WIDTH = 1000
+WIN_HEIGHT = 550
 #
 #
 #
