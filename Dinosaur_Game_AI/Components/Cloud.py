@@ -9,7 +9,6 @@ class Cloud(object):
         self.y = random.randrange(20, 275)
         self.x = config.WIN_WIDTH + self.WIDTH
         self.vel = 2
-
     
     def move(self):
         self.x -= self.vel 

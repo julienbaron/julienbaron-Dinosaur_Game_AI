@@ -1,5 +1,4 @@
 import pygame as pg 
-from Components.Base import Base
 import os
 
 class View():
@@ -16,7 +15,7 @@ class View():
         #for dinosaur in dinosaurs:
         #    dinosaur.draw(win)
         #pg.display.update()
-        #dinosaurs.draw(win)
+        dinosaurs.draw(win)
         pg.display.update()
 
 
