@@ -41,6 +41,7 @@ class Manager(object):
             bird.move()
             base.move()
             dino.jump()
+            dino.crawl()
             for index,cloud in enumerate(cloudList): 
                 cloud.move()
                 if cloud.x + cloud.WIDTH == 0:
