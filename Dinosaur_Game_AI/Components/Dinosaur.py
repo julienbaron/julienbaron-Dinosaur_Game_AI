@@ -23,7 +23,7 @@ class Dinosaur(object):
         if self.is_jump == True: 
             if self.jump_count >= -10:
                 self.y -= (self.jump_count * abs(self.jump_count)) * 0.5
-                self.jump_count -= 1
+                self.jump_count -= 0.7
             else:
                 self.jump_count = 10
                 self.is_jump = False
@@ -47,7 +47,6 @@ class Dinosaur(object):
                 self.img = self.RUN_DINOSAUR_IMG[1]
             elif self.image_count < self.ANIMATION_TIME*3:
                 self.image_count = 0
-        print(self.y)
         win.blit(self.img, (self.x , self.y))
             
     def get_mask(self):

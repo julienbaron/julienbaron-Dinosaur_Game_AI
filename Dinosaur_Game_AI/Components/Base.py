@@ -27,7 +27,6 @@ class Base(object):
         win.blit(self.BASE_IMG, (self.x1, self.y))
         win.blit(self.BASE_IMG, (self.x2, self.y))
 
-    @property
     def getVel(self):
         return self.vel
 

@@ -1,17 +1,19 @@
 import pygame as pg 
 import os 
 import random 
+import config
 
 class Bird(object):
     """description of class"""
-    def __init__(self, x, vel):
-        self.BIRD_IMG = [pg.image.load(os.path.join("Sprites","Base_1.PNG")), pg.image.load(os.path.join("Sprites","Base_1.PNG"))]
-        self.x  = x 
-        self.y = random.randrange(20, 30)
+    def __init__(self, vel):
+        self.BIRD_IMG = [pg.image.load(os.path.join("Sprites","Bird_1.PNG")), pg.image.load(os.path.join("Sprites","Bird_2.PNG"))]
+        self.y = random.randrange(350, 450)
         self.img = self.BIRD_IMG[0]
-        self.vel = vel
+        self.WIDTH = self.img.get_width()
+        self.vel = vel + 6.5
+        self.x = config.WIN_WIDTH + self.WIDTH
         self.img_count = 0
-        self.animationTime = 3
+        self.animationTime = 10
 
     def move(self):
         self.x -= self.vel
@@ -23,6 +25,7 @@ class Bird(object):
             self.img = self.BIRD_IMG[0]
         elif self.img_count < self.animationTime*2:
             self.img = self.BIRD_IMG[1]
+        elif self.img_count < self.animationTime*3:
             self.img_count = 0
 
         win.blit(self.img, (self.x, self.y))
