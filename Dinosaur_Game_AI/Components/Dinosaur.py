@@ -7,6 +7,7 @@ class Dinosaur(object):
     
     STAY_DINOSAUR_IMG = pg.image.load(os.path.join("Sprites","Dinosaur_1.PNG"))
     CRAWL_DINOSAUR_IMG = pg.image.load(os.path.join("Sprites","Dinosaur_5.PNG"))
+    DEAD_DINOSAUR_IMG = pg.image.load(os.path.join("Sprites","Dinosaur_4.PNG"))
 
     def __init__(self, x, y):
         self.RUN_DINOSAUR_IMG = [pg.image.load(os.path.join("Sprites","Dinosaur_2.PNG")), pg.image.load(os.path.join("Sprites","Dinosaur_3.PNG"))] 
@@ -17,7 +18,8 @@ class Dinosaur(object):
         self.is_jump = False
         self.jump_count = 10
         self.ANIMATION_TIME = 7
-        self.is_crawling = False 
+        self.is_crawling = False
+        self.is_dead = False
 
     def jump(self):
         if self.is_jump == True: 
@@ -39,6 +41,8 @@ class Dinosaur(object):
             self.img = self.STAY_DINOSAUR_IMG
         elif self.is_crawling == True:
             self.img = self.CRAWL_DINOSAUR_IMG
+        elif self.is_dead == True:
+            self.img = self.DEAD_DINOSAUR_IMG
         else:
             self.image_count += 1 
             if self.image_count < self.ANIMATION_TIME:
@@ -60,4 +64,7 @@ class Dinosaur(object):
         
     def setIsCrawling(self, value:bool):
         self.is_crawling = value
+
+    def set_dead(self, value: bool):
+        self.is_dead = value 
 

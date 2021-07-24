@@ -33,12 +33,11 @@ class Bird(object):
     def collide_bird(self, dinausor):
         dinosaur_mask = dinausor.get_mask()
         bird_mask = pg.mask.from_surface(self.img)
-
-        calculate_coordonate = (self.x - dinausor.x, self.y - round(dinausor.y))
-
+ 
+        calculate_coordonate = (round(self.x) - dinausor.x, self.y - round(dinausor.y))
         collide_point = dinosaur_mask.overlap(bird_mask, calculate_coordonate)
 
-        if self.collide_bird:
+        if collide_point != None:
             return True 
 
         return False 

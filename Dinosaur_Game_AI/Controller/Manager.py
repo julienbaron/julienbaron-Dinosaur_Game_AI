@@ -2,6 +2,7 @@ import pygame as pg
 import config
 from View import View
 import pdb
+import time 
 import random
 from Components.Base import Base
 from Components.Dinosaur import Dinosaur
@@ -9,19 +10,18 @@ from Components.Bird import Bird
 from Components.Cloud import Cloud
 from Controller import KeyManager
 
-GEN = 0
+
 
 class Manager(object):
     """description of class"""
-    @staticmethod
-    def manageGame():
+    def manageGame(self):
         dino = Dinosaur(100,390)
         base = Base(480)
         bird= Bird(base.getVel())
         cloudList = []
         obstacleList = []
         win = pg.display.set_mode((config.WIN_WIDTH, config.WIN_HEIGHT))
-        clock = pg.time.Clock()
+        score = 0 
         run = True 
         while run :
             for event in pg.event.get():
@@ -39,25 +39,25 @@ class Manager(object):
                     generate_random_obstacle = random.randrange(0,5)
                     if generate_random_obstacle %2 == 0:
                         obstacleList.append(Bird(base.getVel()))
-            #for bird in birds:
-            #    if bird.collide_bird(dino):
-            #        pass 
-            #    if bird.x + bird.img.get_width() < 0:
-            #        #rem.append(bird)
-            #        pass
+            for obs in obstacleList:
+                if obs.collide_bird(dino) == True:
+                    dino.set_dead(True)
+                    dino.setIsJump(False)
+                    dino.setIsCrawling(False)
+                    View.DrawWindow(obstacleList, dino, base, cloudList, win, score)
+                    time.sleep(1)
+                    return False 
+            score += 1
             base.move()
             dino.jump()
             dino.crawl()
-            for index,cloud in enumerate(cloudList): 
-                cloud.move()
-                if cloud.x + cloud.WIDTH == 0:
-                    del cloudList[index]
-            for index, obs in enumerate(obstacleList): 
-                obs.move()
-                if obs.x + obs.WIDTH <= 0:
-                    del obstacleList[index]
-                print(obs.x)
-            View.DrawWindow(obstacleList, dino, base, cloudList, win)
-       
-
-
+            cloudList = self.manage_list(cloudList)
+            obstacleList = self.manage_list(obstacleList)
+            View.DrawWindow(obstacleList, dino, base, cloudList, win, score)
+   
+    def manage_list(self, list):
+        for index, object in enumerate(list):
+            object.move()
+            if object.x + object.WIDTH == 0:
+                del list[index]
+        return list 
