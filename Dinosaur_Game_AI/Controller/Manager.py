@@ -56,12 +56,13 @@ class Manager(object):
             dino.crawl()
             cloudList = self.manage_list(cloudList)
             obstacleList = self.manage_list(obstacleList)
+            print(obstacleList)
             GameView.DrawWindow(obstacleList, dino, base, cloudList, win, score)
    
     def manage_list(self, list):
         for index, object in enumerate(list):
             object.move()
-            if object.x + object.WIDTH == 0:
+            if object.x + object.WIDTH < 0:
                 del list[index]
         return list 
 

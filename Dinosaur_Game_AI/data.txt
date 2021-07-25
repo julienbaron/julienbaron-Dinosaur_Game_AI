@@ -1,1 +1,1 @@
-{"storage": [{"high_score": 101}]}
+{"storage": [{"high_score": 580}]}
