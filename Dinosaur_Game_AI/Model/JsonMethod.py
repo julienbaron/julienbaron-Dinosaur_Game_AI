@@ -11,25 +11,26 @@ class JsonMethod(object):
         if not my_file.is_file():
             f = open("data.txt", "a+")
             f.close()
+        with open('data.txt') as json_file:
+            return True if os.path.getsize('data.txt') > 0 else False
+      
             
     @staticmethod
-    def read_json(target_data):
+    def read_json(target_data, existing_data):
         try:
             with open('data.txt') as json_file:
-                data = json.load(json_file)
-                return data['storage'][target_data]                
+                if existing_data == True:
+                    data = json.load(json_file)
+                    return data[target_data][0].get('high_score') #Needs to be rewritten 
         except FileNotFoundError:
             print('Unable to read data from json file')
 
     @staticmethod
-    def write_json(score):
-        try:
-            data = {}
-            data['storage'] = []
-            data['storage'].append({
-                'high_score': score
-                })
-            with open('data.txt', 'w') as outfile:
-                json.dump(data, outfile)
-        except FileNotFoundError:
-           print("Unable to record data")  
+    def write_json(target_data, score):
+        data = {}
+        data[target_data] = []
+        data[target_data].append({
+            'high_score': score
+            })
+        with open('data.txt', 'w') as outfile:
+            json.dump(data, outfile) 

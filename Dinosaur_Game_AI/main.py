@@ -1,11 +1,10 @@
 import os 
 from Controller.Manager import Manager
+from Controller.Encryption import Encryption
 
 if __name__ == "__main__":
-    local_dir = os.path.dirname(__file__)
-    print(local_dir)
-    #config_path = os.path.join(local_dir, "test")
     game_loop = Manager()
+    #Encryption.generate_key()
     game_loop.manageGame()
 
 

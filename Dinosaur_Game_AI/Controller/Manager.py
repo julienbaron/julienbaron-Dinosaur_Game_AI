@@ -1,6 +1,6 @@
 import pygame as pg 
 import config
-from View import View
+from View.GameView import GameView
 import pdb
 import time 
 import random
@@ -9,6 +9,8 @@ from Components.Dinosaur import Dinosaur
 from Components.Bird import Bird 
 from Components.Cloud import Cloud
 from Controller import KeyManager
+from Controller.Encryption import Encryption
+from Model.JsonMethod import JsonMethod
 
 
 
@@ -44,8 +46,9 @@ class Manager(object):
                     dino.set_dead(True)
                     dino.setIsJump(False)
                     dino.setIsCrawling(False)
-                    View.DrawWindow(obstacleList, dino, base, cloudList, win, score)
+                    GameView.DrawWindow(obstacleList, dino, base, cloudList, win, score)
                     time.sleep(1)
+                    self.manage_highscore(score)
                     return False 
             score += 1
             base.move()
@@ -53,7 +56,7 @@ class Manager(object):
             dino.crawl()
             cloudList = self.manage_list(cloudList)
             obstacleList = self.manage_list(obstacleList)
-            View.DrawWindow(obstacleList, dino, base, cloudList, win, score)
+            GameView.DrawWindow(obstacleList, dino, base, cloudList, win, score)
    
     def manage_list(self, list):
         for index, object in enumerate(list):
@@ -61,3 +64,14 @@ class Manager(object):
             if object.x + object.WIDTH == 0:
                 del list[index]
         return list 
+
+    def manage_highscore(self, actual_score):
+        existing_data = JsonMethod.check_json()
+        #key = Encryption.get_key()
+        if existing_data == True:
+            json_data = JsonMethod.read_json('storage', existing_data)
+            #json_data = Encryption.decrypt(data, key)
+        else:
+           json_data = 0
+        if int(json_data) < actual_score:
+            JsonMethod.write_json('storage', actual_score)
