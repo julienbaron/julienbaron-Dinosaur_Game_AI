@@ -18,6 +18,8 @@ class MenuManager():
 
     def menu_view(self):
         win = pg.display.set_mode((config.WIN_WIDTH, config.WIN_HEIGHT))
+        pg.display.set_caption('Dinosaur_Game_AI')
+        counter = 0
         while self.start == False:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
@@ -29,7 +31,8 @@ class MenuManager():
                 manage = Manager()
                 manage.manageGame()
             [x.move() for x in self.component_list if isinstance(x, Base)]
-            MainView.draw_window(win, self.component_list, regular)
+            counter += 1 if counter <= 21 else -20
+            MainView.draw_window(win, self.component_list, regular, counter)
 
             
 
