@@ -58,6 +58,12 @@ class Dinosaur(object):
     
     def get_jump(self):
         return self.jump_count
+
+    def get_y(self):
+        return self.y
+
+    def get_x(self):
+        return self.x
     
     def setIsJump(self, value:bool):
         self.is_jump = value 

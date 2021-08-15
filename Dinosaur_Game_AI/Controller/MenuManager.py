@@ -7,6 +7,7 @@ from Components.Dinosaur import Dinosaur
 from Components.Button import Button
 from Controller.Enum.Img import Img
 from Controller.Manager import Manager
+from Controller.IAManager import IAManager
 
 class MenuManager():
     """description of class"""
@@ -27,12 +28,16 @@ class MenuManager():
                     pg.quit()
                     return False 
             regular = Button(100,230, Img.REGULAR_IMG.value, 0.7)
+            ia = Button(600, 235, Img.AI_IMG.value, 0.7)
             if regular.is_clicked():
                 manage = Manager()
                 manage.manageGame()
+            elif ia.is_clicked():
+                ia_manager = IAManager()
+                ia_manager.run()
             [x.move() for x in self.component_list if isinstance(x, Base)]
             counter += 1 if counter <= 21 else -20
-            MainView.draw_window(win, self.component_list, regular, counter)
+            MainView.draw_window(win, self.component_list, regular, ia, counter)
 
             
 

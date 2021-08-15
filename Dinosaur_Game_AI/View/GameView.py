@@ -15,7 +15,7 @@ class GameView():
         base.draw(win)
         [cloud.draw(win) for cloud in cloudList]
         [obstacle.draw(win) for obstacle in obstacleList]
-        dinosaurs.draw(win)
+        [dino.draw(win) for dino in dinosaurs]
         actual_score = STAT_FONT.render("Score:" + str(score),1, (0,0,0))
         win.blit(actual_score, (config.WIN_WIDTH - 10 - actual_score.get_width(), 10))
         if JsonMethod.check_json() == True:
