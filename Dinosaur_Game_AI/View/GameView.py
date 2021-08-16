@@ -9,11 +9,11 @@ STAT_FONT = pg.font.Font("dogica.ttf", 20)
 class GameView():
     """description of class"""
 
-    def DrawWindow(obstacleList, dinosaurs, base, cloudList, win, score):
+    def DrawWindow(obstacleList, dinosaurs, base, cloud_list, win, score):
         BACKGROUND_IMG = pg.transform.scale2x(pg.image.load(os.path.join("Sprites","Background_2.PNG")))
         win.blit(BACKGROUND_IMG,(0,0))
         base.draw(win)
-        [cloud.draw(win) for cloud in cloudList]
+        [cloud.draw(win) for cloud in cloud_list]
         [obstacle.draw(win) for obstacle in obstacleList]
         [dino.draw(win) for dino in dinosaurs]
         actual_score = STAT_FONT.render("Score:" + str(score),1, (0,0,0))

@@ -22,7 +22,7 @@ class IAManager():
         nets = []
         ge = []
         dinos = []
-        cloudList = []
+        cloud_list = []
         obstacleList = []
         score = 0 
         run = True 
@@ -51,10 +51,12 @@ class IAManager():
                     #print(abs(obstacleList[0].x))
                     #print(abs(obstacleList[0].y))
                     #print('-------------------------------------')
-                    dino.setIsJump(True) if output[0] < 0 else dino.setIsJump(False)
-                    dino.setIsCrawling(True) if output [0] > 0 else dino.setIsCrawling(False)
-            if random.randrange(0, 200) == 2 and len(cloudList) <= 3 :
-                cloudList.append(Cloud())
+                    dino.setIsJump(True) if output[0] > 0 else dino.setIsJump(False)
+                    dino.setIsCrawling(True) if output [0] < 0 else dino.setIsCrawling(False)
+            if random.randrange(0, 150) == 1 and len(cloud_list) <= 3 :
+                new_cloud = Cloud(cloud_list)
+                if new_cloud.is_collide == True:
+                    cloud_list.append(Cloud()) 
             last_obstacle = obstacleList[-1] if len(obstacleList) != 0 else None
             if len(obstacleList) <= 3: 
                 if last_obstacle == None or last_obstacle.x < 500:
@@ -70,6 +72,8 @@ class IAManager():
                         x.setIsJump(False)
                         x.setIsCrawling(False)
                         dinos.pop(index)
+                        manage_highscore = Manager()
+                        manage_highscore.manage_highscore(score)
             if len(dinos) > 0 :
                 score +=1 
             else:
@@ -79,9 +83,9 @@ class IAManager():
             [d.jump() for d in dinos]
             [d.crawl() for d in dinos]
             method_list = Manager()
-            cloudList = method_list.manage_list(cloudList)
+            cloud_list = method_list.manage_list(cloud_list)
             obstacleList = method_list.manage_list(obstacleList)
-            GameView.DrawWindow(obstacleList, dinos, base, cloudList, win, score)
+            GameView.DrawWindow(obstacleList, dinos, base, cloud_list, win, score)
 
     def run(self):
         global GEN

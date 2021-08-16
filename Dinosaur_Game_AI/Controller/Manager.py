@@ -20,7 +20,7 @@ class Manager(object):
         dino = [Dinosaur(100,390)]
         base = Base(480)
         bird= Bird(base.getVel())
-        cloudList = []
+        cloud_list = []
         obstacleList = []
         win = pg.display.set_mode((config.WIN_WIDTH, config.WIN_HEIGHT))
         pg.display.set_caption('Dinosaur_Game_AI')
@@ -34,8 +34,11 @@ class Manager(object):
                     return False 
                 else:
                     KeyManager.KeyManager.keyPressed(event, dino[0])
-            if random.randrange(0, 200) == 2 and len(cloudList) <= 3 :
-                cloudList.append(Cloud())
+            if random.randrange(0, 120) == 2 and len(cloud_list) <= 3 :
+                if len(cloud_list) == 0 or cloud_list[-1].x < config.WIN_WIDTH and len(cloud_list) > 0: 
+                    cloud_list.append(Cloud(cloud_list))
+                else:
+                    print('False')
             last_obstacle = obstacleList[-1] if len(obstacleList) != 0 else None
             if len(obstacleList) <= 3: 
                 if last_obstacle == None or last_obstacle.x < 500:
@@ -47,7 +50,7 @@ class Manager(object):
                     dino[0].set_dead(True)
                     dino[0].setIsJump(False)
                     dino[0].setIsCrawling(False)
-                    GameView.DrawWindow(obstacleList, dino, base, cloudList, win, score)
+                    GameView.DrawWindow(obstacleList, dino, base, cloud_list, win, score)
                     time.sleep(1)
                     self.manage_highscore(score)
                     return False 
@@ -55,10 +58,9 @@ class Manager(object):
             base.move()
             [d.jump() for d in dino]
             [d.crawl() for d in dino]
-            cloudList = self.manage_list(cloudList)
+            cloud_list = self.manage_list(cloud_list)
             obstacleList = self.manage_list(obstacleList)
-            print(obstacleList)
-            GameView.DrawWindow(obstacleList, dino, base, cloudList, win, score)
+            GameView.DrawWindow(obstacleList, dino, base, cloud_list, win, score)
    
     def manage_list(self, list):
         for index, object in enumerate(list):
