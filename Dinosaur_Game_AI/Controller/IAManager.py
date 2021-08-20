@@ -56,7 +56,7 @@ class IAManager():
             if random.randrange(0, 150) == 1 and len(cloud_list) <= 3 :
                 new_cloud = Cloud(cloud_list)
                 if new_cloud.is_collide == True:
-                    cloud_list.append(Cloud()) 
+                    cloud_list.append(Cloud(cloud_list)) 
             last_obstacle = obstacleList[-1] if len(obstacleList) != 0 else None
             if len(obstacleList) <= 3: 
                 if last_obstacle == None or last_obstacle.x < 500:

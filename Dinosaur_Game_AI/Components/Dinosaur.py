@@ -25,7 +25,7 @@ class Dinosaur(object):
         if self.is_jump == True: 
             if self.jump_count >= -10:
                 self.y -= (self.jump_count * abs(self.jump_count)) * 0.5
-                self.jump_count -= 0.7
+                self.jump_count -= 0.5
             else:
                 self.jump_count = 10
                 self.is_jump = False
@@ -43,6 +43,7 @@ class Dinosaur(object):
             self.img = self.CRAWL_DINOSAUR_IMG
         elif self.is_dead == True:
             self.img = self.DEAD_DINOSAUR_IMG
+            self.y = 390
         else:
             self.image_count += 1 
             if self.image_count < self.ANIMATION_TIME:
