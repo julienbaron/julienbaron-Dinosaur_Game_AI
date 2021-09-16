@@ -2,7 +2,7 @@ import pygame as pg
 
 from Controller.Enum.Img import Img
 
-class Button(object):
+class Button():
     """description of class"""
     def __init__(self, x, y, image, scale):
         self.width = image.get_width()

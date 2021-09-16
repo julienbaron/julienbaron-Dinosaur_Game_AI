@@ -11,9 +11,8 @@ from Controller.IAManager import IAManager
 
 class MenuManager():
     """description of class"""
+
     def __init__(self):
-        #self.base = Base(config.BASE_HEIGHT)
-        #self.dino = Dinosaur(config.DINO_WIDTH, config.DINO_HEIGHT)
         self.component_list = [Base(config.BASE_HEIGHT), Dinosaur(config.DINO_WIDTH, config.DINO_HEIGHT)]
         self.start = False
 

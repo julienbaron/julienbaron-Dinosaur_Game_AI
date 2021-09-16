@@ -1,19 +1,20 @@
-import pygame as pg 
-import os 
+from Controller.Enum.Img import Img
+from Components.Component import Component
 
-class Base(object):
-    """description of class"""
+class Base(Component):
+    """This class contains the functions necessary for the ground management in the game """
+
     def __init__(self, y):
-        self.BASE_IMG = pg.image.load(os.path.join("Sprites","Base_2.PNG"))
+        self.BASE_IMG = Img.BASE_IMG.value
         self.WIDTH = self.BASE_IMG.get_width()
         self.y = y
         self.x1 = 0
         self.x2 = self.WIDTH
-        self.vel = 3
+        self._vel = 3
 
     def move(self):
-        self.x1 -= self.vel
-        self.x2 -= self.vel 
+        self.x1 -= self._vel
+        self.x2 -= self._vel 
 
         if self.x1 + self.WIDTH < 0:
             self.x1 = self.x2 + self.WIDTH
@@ -27,7 +28,12 @@ class Base(object):
         win.blit(self.BASE_IMG, (self.x1, self.y))
         win.blit(self.BASE_IMG, (self.x2, self.y))
 
-    def getVel(self):
-        return self.vel
+    @property
+    def vel(self):
+        return self._vel
+
+    @vel.setter 
+    def vel(self, value):
+        self._vel = value
 
 

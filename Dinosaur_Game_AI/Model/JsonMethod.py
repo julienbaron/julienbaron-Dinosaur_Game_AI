@@ -21,7 +21,7 @@ class JsonMethod(object):
             with open('data.txt') as json_file:
                 if existing_data == True:
                     data = json.load(json_file)
-                    return data[target_data][0].get('high_score') #Needs to be rewritten 
+                    return data[target_data][0].get('high_score') #need to be reviewed
         except FileNotFoundError:
             print('Unable to read data from json file')
 
