@@ -20,6 +20,7 @@ class Manager():
     def __init__(self, game_mode):
         self.game_mode = game_mode 
         self.dinos = []
+        self.gen = 0
         self.base = Base(config.BASE_HEIGHT)
         self.bird = Bird(base.vel)
         self.cloud_list = []
@@ -31,13 +32,42 @@ class Manager():
 
     def start(self):
         while self.run == True:
-           for _,event in enumerate(pg.event.get()):
-               if event.type == pg.QUIT():
-                   self.run = False
-                   pg.quit()
-                   return False
-               self.key_manager(event.type) if self.game_mode == 1 else None 
-    
+            for _,event in enumerate(pg.event.get()):
+                if event.type == pg.QUIT():
+                    self.run = False
+                    pg.quit()
+                    return False
+                self.key_manager(event.type) if self.game_mode == 1 else None
+            self.regular_manager if self.game_mode == 1 else self.AI_manager
+            if len(self.dinos) > 0: score += 1
+            self.base.move()
+            [d.jump() for d in dinos]
+            [d.crawl() for d in dinos]
+            cloud_list = self.manage_list(cloud_list)
+            obstacleList = self.manage_list(obstacleList)
+            GameView.DrawWindow(obstacleList, dino, base, cloud_list, win, score)
+
+    def regular_manager(self):
+        self.randomize_cloud()
+        self.randomize_obstacle()
+
+
+    def AI_manager(self, genomes, generation):
+        self.nets = []
+        self.ge = []
+        self.gen += 1 
+        for index,g in enumerate(genomes):
+            net = neat.nn.FeedForwardNetwork.create(g, generation)
+            nets.append(net)
+            self.dinos.append(Dinosaur(config.DINO_WIDTH, config.DINO_HEIGHT))
+            g.fitness = 0
+            self.ge.append(g)
+        for index, dino in enumerate(dinos):
+            if len(self.obsctacle_list) >0:
+                output = nets[index].activate((dino.y(), dino.x, abs(obstacleList[0].x), abs(obstacleList[0].y)))
+                dino.is_jump(True) if output[0] > 0.5 else dino.is_jump(False)
+                dino.is_crawling(True) if output[0] < 0.5 else dino.is_crawling(False)
+
     def key_manager(self, event_type):
         self.dinos.append(Dinosaur(config.DINO_WIDTH, config.DINO_HEIGHT))
         if event_type != pg.QUIT():
@@ -70,14 +100,14 @@ class Manager():
 
     def obstacle_collide(self):
         for obs in self.obsctacle_list:
-                if obs.collide_bird(self.dinos[0]) == True:
-                    self.dinos[0].is_dead = True 
-                    self.dinos[0].is_jump = False 
-                    self.dinos[0].is_crawling = False 
-                    GameView.DrawWindow(self.obstacleList, self.dinos, self.base, self.cloud_list, self.win, self.score)
-                    time.sleep(1)
-                    self.manage_highscore(score)
-                    return False 
+            for index in (index for index, dino in enumerate(self.dinos) if obs.collide_bird(self.dinos[index]) == True):
+                self.dinos[index].is_dead = True 
+                self.dinos[index].is_jump = False 
+                self.dinos[index].is_crawling = False 
+                GameView.DrawWindow(self.obstacleList, self.dinos, self.base, self.cloud_list, self.win, self.score)
+                time.sleep(1)
+                self.manage_highscore(score)
+                return False 
 
     def manage_highscore(self, actual_score):
         existing_data = JsonMethod.check_json()
@@ -98,7 +128,7 @@ class Manager():
                                 config_neat)
         p = neat.Population(config)
 
-        winner = p.run(self.manager,10000)
+        winner = p.run(self.AI_manager, 10000)
         
 
 #class Manager(object):
